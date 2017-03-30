@@ -1,9 +1,9 @@
 #ifndef _LISTA_HH
 #define _LISTA_HH
 
-#include "IPojemnik.hh"
+#include "../inc/IPojemnik.hh"
 
-class Lista: IPojemnik{
+class Lista: IPojemnik {
 	Elem* head;
 	Elem* tail;
 	int size;
@@ -19,6 +19,8 @@ public:
 
 	Lista();
 	~Lista();
+
+	virtual void wykonaj_obliczenia(int nr_algorytmu, int ilosc_elem, int wartosc_elem);
 };
 
 #endif //_LISTA_HH

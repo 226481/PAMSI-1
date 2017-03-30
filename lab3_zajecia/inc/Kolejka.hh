@@ -1,9 +1,9 @@
 #ifndef _KOLEJKA_HH
 #define _KOLEJKA_HH
 
-#include "IPojemnik.hh"
+#include "../inc/IPojemnik.hh"
 
-class Kolejka: IPojemnik{
+class Kolejka: IPojemnik {
 	Elem* head;
 	Elem* tail;
 	int size;
@@ -17,6 +17,8 @@ public:
 
 	Kolejka();
 	~Kolejka();
+
+	virtual void wykonaj_obliczenia(int nr_algorytmu, int ilosc_elem, int wartosc_elem);
 };
 
 #endif //_KOLEJKA_HH

@@ -1,9 +1,9 @@
 #ifndef _STOS_HH
 #define _STOS_HH
 
-#include "IPojemnik.hh"
+#include "../inc/IPojemnik.hh"
 
-class Stos: IPojemnik{
+class Stos: IPojemnik {
 	Elem* head;
 	int size;
 public:
@@ -16,6 +16,8 @@ public:
 
 	Stos();
 	~Stos();
+
+	virtual void wykonaj_obliczenia(int nr_algorytmu, int ilosc_elem, int wartosc_elem);
 };
 
 #endif //_STOS_HH
