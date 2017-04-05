@@ -1,0 +1,20 @@
+sprawozdanie
+
+najgorszy O(?n^2???)
+średni O(nlog)
+
+quicksort
+- losowe elem
+- posortowane rosnaco
+- posortowane malejaco
+
+jaki wpływ na czas ma metoda wyboru pivota 
+- jakie sa?
+- jak wpływają na przypadku pesymistycznym
+
+
+wybór pivota jest głównym czynnikiem wpływającym na czas
+
+
+dodatkowe krzwywe zlożoności!
+dodać do wniosków złożoność
