@@ -8,12 +8,12 @@ int Elem::get_value() {
 	return value;
 }
 
-void Elem::set_next(Elem* next) {
-	wsk_next = next;
+void Elem::set_next(Elem* _next) {
+	wsk_next = _next;
 }
 
-void Elem::set_prev(Elem* prev) {
-	wsk_prev = prev;
+void Elem::set_prev(Elem* _prev) {
+	wsk_prev = _prev;
 }
 
 Elem* Elem::get_next() {

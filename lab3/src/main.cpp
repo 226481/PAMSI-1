@@ -1,50 +1,53 @@
-#include <iostream>
 #include "../inc/Stoper.hh"
 #include "../inc/Lista.hh"
-
+#include "../inc/Kolejka.hh"
+#include "../inc/Stos.hh"
+#include "../inc/Libs.hh"
 
 int main() {
 
-	Lista lista;
+	Lista* lista;
+	Kolejka* kolejka;
+	Stos* stos;
+	Stoper stoper;
 
-	Elem* elem1 = new Elem(10,10);
-	Elem* elem2 = nullptr;
-	Elem* elem3 = nullptr;
+	lista = new Lista();
+	kolejka = new Kolejka();
+	stos = new Stos();
+	std::ofstream file;
 
-	std::cout << "elem1 " << elem1->get_value() << std::endl;
-
-	std::cout << "size " << lista.get_size() << std::endl;
-	lista.push(elem1);
-	std::cout << "size " << lista.get_size() << std::endl;
-
-	elem2 = lista.check(0);
-	std::cout << "elem2 " << elem2->get_value() << std::endl;
-	std::cout << "size " << lista.get_size() << std::endl;
-	elem3 = lista.pop();
-	std::cout << "size " << lista.get_size() << std::endl;
+	int pom = 99; // dowolna wartość, 2x będzie maksymalną wartością klucza, 1x szukany
+	int ilosc_pomiarow = 20;
+	int ilosc_elem_MAX = 100000;
 
 	srand(time(NULL));
-	lista.fill(100,rand()%100);
-	std::cout << "size " << lista.get_size() << std::endl;
 
-	elem3 = new Elem(666,5);
+	// remove("lista.dat");
+	// file.open("lista.dat"); // std::ios::app
+	// for (int ilosc_elem = 10; ilosc_elem <= ilosc_elem_MAX; ilosc_elem *= 10) {
+	// 	stoper.wykonaj_pomiar(lista, ilosc_pomiarow, pom, ilosc_elem);
+	// 	stoper.wypisz_pomiar(file);
+	// 	stoper.wypisz_pomiar(std::cout);
+	// }
+	// file.close();
+	//
+	// remove("kolejka.dat");
+	// file.open("kolejka.dat"); // std::ios::app
+	// for (int ilosc_elem = 10; ilosc_elem <= ilosc_elem_MAX; ilosc_elem *= 10) {
+	// 	stoper.wykonaj_pomiar(kolejka, ilosc_pomiarow, pom, ilosc_elem);
+	// 	stoper.wypisz_pomiar(file);
+	// 	stoper.wypisz_pomiar(std::cout);
+	// }
+	// file.close();
 
-	lista.insert(elem3,5);
-	std::cout << "size " << lista.get_size() << std::endl;
-
-	Elem* elem4;
-	elem4 = lista.find(5);
-	if (elem4 != nullptr)
-		std::cout << "znalazłem!" << std::endl;
-	std::cout << "size " << lista.get_size() << std::endl;
-
-	Elem* elem5 = nullptr;
-
-	elem5 = lista.pop();
-	std::cout << "size " << lista.get_size() << std::endl;
-
-	std::cout << elem5->get_priority() << std::endl;
+	remove("stos.dat");
+	file.open("stos.dat"); // std::ios::app
+	for (int ilosc_elem = 10; ilosc_elem <= ilosc_elem_MAX; ilosc_elem *= 10) {
+		stoper.wykonaj_pomiar(stos, ilosc_pomiarow, pom, ilosc_elem);
+		stoper.wypisz_pomiar(file);
+		stoper.wypisz_pomiar(std::cout);
+	}
+	file.close();
 
 	return 0;
 }
-

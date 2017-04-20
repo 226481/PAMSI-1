@@ -4,132 +4,139 @@ int Lista::get_size() {
 	return size;
 }
 
-bool Lista::push(Elem *elem_p) {
-	if (size > -1) { // przynajmniej jeden
-		elem_p->Elem::set_next(head);
-		head->set_prev(elem_p);
-		head = elem_p;
-		head->set_prev(nullptr);
-		size++;
-		return true;
-	}
-
-	if (size == -1) { // brak elementow
-		head = elem_p;
-		head->set_prev(nullptr);
-		tail = elem_p;
-		tail->set_next(nullptr);
-		size++;
-		return true;
-	}
-
-	return false;
+bool Lista::push(Elem *_elem_in) {
+  _elem_in->set_next(wsk_head);
+  if (wsk_head != nullptr) {
+    wsk_head->set_prev(_elem_in);
+  }
+  wsk_head = _elem_in;
+  size++;
+  return true;
 }
 
 Elem* Lista::pop() {
-	Elem* elem_out = nullptr;
-
-	if (size >= 1) { // przynajmniej dwa
-		elem_out = head;
-		head = elem_out->get_next();
-		head->set_prev(nullptr);
-
-		elem_out->set_next(nullptr);
-		elem_out->set_prev(nullptr);
+	Elem* _elem_pom = wsk_head;
+	if (wsk_head != nullptr) {
+		wsk_head = wsk_head->get_next();
 		size--;
+		wsk_head->set_prev(nullptr);
+		_elem_pom->set_prev(nullptr);
+		_elem_pom->set_next(nullptr);
 	}
-
-	if (size == 0) { // jeden
-		elem_out = head;
-		head = nullptr;
-		tail = nullptr;
-		size--;
-	}
-
-	if (size == -1) { // brak elementow
-		elem_out = nullptr;
-	}
-
-	return elem_out;
+	return _elem_pom;
 }
 
-Elem* Lista::find(int klucz) {
-	Elem* pom = head;
+Elem* Lista::find(int key) {
+	Elem* _elem_pom = wsk_head;
 
-	while (pom->get_next() != nullptr) {
-		if (pom->get_priority() == klucz) {
-			if (pom->get_prev() != nullptr) {
-				( pom->get_prev() )->set_next( pom->get_next() );
+	if ( _elem_pom->get_priority() == key ) { // pierwszy na liście
+		pop();
+		size--;
+		return _elem_pom;
+	} else {
+		while ( _elem_pom->get_next() != nullptr ) { // dalej
+			if ( _elem_pom->get_priority() == key ) {
+				if ( _elem_pom->get_prev() != nullptr ) {
+					( _elem_pom->get_prev() )->set_next( _elem_pom->get_next() );
+				}
+				if (_elem_pom->get_next() != nullptr) {
+					( _elem_pom->get_next() )->set_prev( _elem_pom->get_prev());
+				}
+				_elem_pom->set_next(nullptr);
+				_elem_pom->set_prev(nullptr);
+				size--;
+				return _elem_pom;
+			} else {
+				_elem_pom = _elem_pom->get_next();
 			}
-			if (pom->get_next() != nullptr) {
-				( pom->get_next() )->set_prev( pom->get_prev());
-			}
-			size--;
-			return pom;
-		} else {
-			pom = pom->get_next();
 		}
 	}
 	return nullptr;
 }
 
-bool Lista::insert(Elem *elem_i, int idx_i) {
-	Elem* pom = head;
+bool Lista::insert(Elem* _elem_in, int idx) {
+	Elem* _elem_pom = wsk_head;
 
-	for (int i=0;i<=size+1;i++) {
-		if (i == idx_i) {
-			if (pom->get_prev() != nullptr) {
-				elem_i->set_prev( pom->get_prev() );
-				( elem_i->get_prev() )->set_next(elem_i);
+	for (int i=0; i<=size; i++) {
+		if ( i == idx ) {
+			if ( _elem_pom->get_prev() != nullptr ) {
+				_elem_in->set_prev( _elem_pom->get_prev() );
+				( _elem_in->get_prev() )->set_next(_elem_in);
 			}
-			if (pom->get_next() != nullptr) {
-				elem_i->set_next( pom );
-				( elem_i->get_next() )->set_prev(elem_i);
+			if ( _elem_pom->get_next() != nullptr) {
+				_elem_in->set_next( _elem_pom );
+				( _elem_in->get_next() )->set_prev(_elem_in);
 			}
 			size++;
 			return true;
 		} else {
-			pom = pom->get_next();
+			_elem_pom = _elem_pom->get_next();
 		}
 	}
 	return false;
 }
 
-Elem* Lista::check(int idx_rm) {
-	Elem* pom = head;
+Elem* Lista::remove(int idx) {
+	Elem* _elem_pom = get(idx);
 
-	for (int i=0;i<=size;i++) {
-		if (i == idx_rm) {
-			return pom;
+	if ( _elem_pom->get_prev() != nullptr ) {
+		( _elem_pom->get_prev() )->set_next( _elem_pom->get_next() );
+	}
+	if (_elem_pom->get_next() != nullptr) {
+		( _elem_pom->get_next() )->set_prev( _elem_pom->get_prev());
+	}
+	_elem_pom->set_next(nullptr);
+	_elem_pom->set_prev(nullptr);
+	size--;
+	return _elem_pom;
+}
+
+Elem* Lista::get(int idx) {
+	Elem* _elem_pom = wsk_head;
+
+	for (int i=0; i<=size; i++) {
+		if (i == idx) {
+			return _elem_pom;
 		} else {
-			pom = pom->get_next();
+			_elem_pom = _elem_pom->get_next();
 		}
 	}
-
 	return nullptr;
 }
 
 Lista::Lista() {
-	head = nullptr;
-	tail = nullptr;
+	wsk_head = nullptr;
+	wsk_tail = nullptr;
 	size = -1;
 }
 
 Lista::~Lista() {
-	head = nullptr;
-	tail = nullptr;
+	wsk_head = nullptr;
+	wsk_tail = nullptr;
 	size = -1;
 }
 
 bool Lista::wykonaj_algorytm(int pom_algorytm) {
-	return find(pom_algorytm) == nullptr;
+	return find(pom_algorytm) != nullptr;
 }
 
-void Lista::fill(int ilosc, int wartosc_klucza) {
-	Elem* elem;
+void Lista::fill(int ilosc, int wartosc_klucza_0_MAX) {
+	Elem* _elem_in;
+
 	for (int i=0; i<ilosc; i++) {
-		elem = new Elem();
-		elem->set_priority(wartosc_klucza);
-		push(elem);
+		_elem_in = new Elem();
+		_elem_in->set_priority(rand()%wartosc_klucza_0_MAX);
+		_elem_in->set_value(i*1000);
+		push(_elem_in);
 	}
+}
+
+void Lista::print(std::ostream & stream){
+	Elem *_elem_pom = wsk_head;
+
+	for (int i=0; i<=size; i++) {
+		stream << "i:" << i << " " << "p:" << _elem_pom->get_priority() << " " << "v:" << _elem_pom->get_value() << "\n";
+		_elem_pom = _elem_pom->get_next();
+	}
+	_elem_pom = nullptr;
 }

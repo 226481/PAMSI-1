@@ -3,12 +3,14 @@
 
 #include "../inc/IPojemnik.hh"
 #include "../inc/ITestowalny.hh"
+#include "../inc/Elem.hh"
+#include "../inc/Libs.hh"
 
-class Stos: IPojemnik, ITestowalny {
-	Elem* head;
+class Stos: public IPojemnik, public ITestowalny {
+	Elem* wsk_head;
 	int size;
 public:
-	virtual void push(Elem element_push);	// dodaje element do pojemnika za head
+	virtual bool push(Elem *_elem_in);	// dodaje element do pojemnika za head
 	virtual Elem* pop();						// zwraca element i usuwa go z pojemnika za head
 	virtual int get_size();					// zwraca wielkosc pojemnika (liczbe elem)
 	virtual Elem* find(int key);	// zwraca wskaznik na podany element
@@ -18,7 +20,9 @@ public:
 	Stos();
 	~Stos();
 
-	virtual void wykonaj_obliczenia(int nr_algorytmu, int ilosc_elem, int wartosc_elem);
+	virtual bool wykonaj_algorytm(int pom_algorytm);
+	virtual void fill(int ilosc, int wartosc_klucza_0_MAX);
+	void print(std::ostream & stream);
 };
 
 #endif //_STOS_HH
